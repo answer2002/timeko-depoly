@@ -36,8 +36,7 @@ app.config['MAIL_DEFAULT_SENDER'] = MAIL_DEFAULT_SENDER
 db.init_app(app)
 mail = Mail(app)
 
-@app.before_first_request
-def initialize_database():
+with app.app_context():
     db.create_all()
     if Comunidad.query.count() == 0:
         db.session.add(Comunidad(nombre='Comunidad por defecto', subdominio='localhost'))
