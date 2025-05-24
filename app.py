@@ -36,7 +36,7 @@ app.config['MAIL_DEFAULT_SENDER'] = MAIL_DEFAULT_SENDER
 db.init_app(app)
 mail = Mail(app)
 
-@app.before_first_request
+@app.before_serving
 def initialize_database():
     db.create_all()
     if Comunidad.query.count() == 0:
