@@ -36,8 +36,12 @@ app.config['MAIL_DEFAULT_SENDER'] = MAIL_DEFAULT_SENDER
 db.init_app(app)
 mail = Mail(app)
 
-with app.app_context():
+
+def initialize_database():
     db.create_all()
+    if Comunidad.query.count() == 0:
+        db.session.add(Comunidad(nombre='Comunidad por defecto', subdominio='localhost'))
+        db.session.commit()
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
