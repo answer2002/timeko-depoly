@@ -1,0 +1,10 @@
+<h1>Login</h1>
+<form method="POST">
+  <input type="text" name="nombre" placeholder="Usuario"><br>
+  <input type="password" name="password" placeholder="Contraseña"><br>
+  <button type="submit">Entrar</button>
+</form>
+<p>
+  <a href="{{ url_for('registro') }}">¿Nuevo usuario?</a> |
+  <a href="{{ url_for('reset_password') }}">¿Olvidaste tu contraseña?</a>
+</p>

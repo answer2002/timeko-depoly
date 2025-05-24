@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Fichajes del Equipo</title>
+    <script>
+        function enviarFormulario() {
+            document.getElementById('form_filtro').submit();
+        }
+    </script>
+</head>
+<body>
+    <h1>Exportar Fichajes del Equipo</h1>
+
+    <form id="form_filtro" method="get" action="{{ url_for('exportar_equipo') }}">
+        <label for="empleado">Empleado:</label>
+        <select name="empleado_id" id="empleado" required onchange="enviarFormulario()">
+            <option value="">--Seleccionar--</option>
+            {% for u in empleados %}
+                <option value="{{ u.id }}" {% if empleado_id == u.id %}selected{% endif %}>{{ u.nombre }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="mes">Mes:</label>
+        <input type="month" id="mes" name="mes" value="{{ request.args.get('mes', '') }}">
+        <button type="submit">Filtrar</button>
+        <button type="button" onclick="window.print()">Imprimir</button>
+    </form>
+
+    <hr>
+
+    {% if registros %}
+        <h2>Fichajes de {{ empleado_nombre }}</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Entrada</th>
+                    <th>Salida</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in registros %}
+                <tr>
+                    <td>{{ r.fecha.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ r.hora_entrada.strftime('%H:%M') if r.hora_entrada else '-' }}</td>
+                    <td>{{ r.hora_salida.strftime('%H:%M') if r.hora_salida else '-' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% elif request.args %}
+        <p>No hay registros para mostrar.</p>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro de Jornada</title>
+</head>
+<body>
+    <h1>Bienvenido, {{ usuario }}</h1>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul style="color: green;">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    {% if rol == 'supervisor' %}
+        <p><a href="{{ url_for('supervisor') }}" target="_blank">Ir al Panel de Supervisor</a></p>
+    {% endif %}
+
+    {% if entrada %}
+        <p>📥 Entrada registrada: {{ entrada }}</p>
+    {% endif %}
+    {% if salida %}
+        <p>📤 Salida registrada: {{ salida }}</p>
+    {% endif %}
+
+    {% if not entrada %}
+        <form method="post" action="/entrada">
+            <button type="submit">Registrar Entrada</button>
+        </form>
+    {% endif %}
+
+    {% if entrada and not salida %}
+        <form method="post" action="/salida">
+            <button type="submit">Registrar Salida</button>
+        </form>
+
+        <h3>Solicitar modificación de entrada o salida:</h3>
+        <form method="post" action="/solicitar_modificacion">
+            <label for="tipo">¿Qué quieres modificar?</label><br>
+            <select name="tipo" required>
+                <option value="entrada">Entrada</option>
+                <option value="salida">Salida</option>
+            </select><br><br>
+
+            <label for="fecha">Fecha propuesta:</label><br>
+            <input type="date" name="fecha" required><br><br>
+
+            <label for="hora">Hora propuesta:</label><br>
+            <input type="time" name="hora" required><br><br>
+
+            <label for="motivo">Motivo de la modificación:</label><br>
+            <textarea name="motivo" rows="3" cols="30" required></textarea><br><br>
+
+            <button type="submit">Solicitar modificación</button>
+        </form>
+    {% endif %}
+
+    {% if entrada and salida %}
+        <h3>Solicitar modificación de salida:</h3>
+        <form method="post" action="/solicitar_modificacion">
+            <input type="hidden" name="tipo" value="salida">
+
+            <label for="fecha">Fecha propuesta:</label><br>
+            <input type="date" name="fecha" required><br><br>
+
+            <label for="hora">Hora propuesta:</label><br>
+            <input type="time" name="hora" required><br><br>
+
+            <label for="motivo">Motivo de la modificación:</label><br>
+            <textarea name="motivo" rows="3" cols="30" required></textarea><br><br>
+
+            <button type="submit">Solicitar modificación</button>
+        </form>
+    {% endif %}
+
+    <p><a href="{{ url_for('logout') }}">Cerrar sesión</a></p>
+</body>
+</html>
+
+<p><a href="{{ url_for('exportar_registros') }}" target="_blank">Ver y exportar mis fichajes</a></p>
+

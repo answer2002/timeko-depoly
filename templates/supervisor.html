@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel de Supervisor</title>
+</head>
+<body>
+    <h1>Panel de Supervisor</h1>
+
+    <h2>Solicitudes pendientes</h2>
+    {% if solicitudes %}
+        <ul>
+        {% for s in solicitudes %}
+            <li>
+                Usuario: {{ s.usuario.nombre }} |
+                Fecha: {{ s.fecha }} |
+                Entrada: {{ s.nueva_entrada or '-' }} |
+                Salida: {{ s.nueva_salida or '-' }} |
+                <a href="{{ url_for('autorizar', solicitud_id=s.id, accion='aceptar') }}">Aceptar</a> |
+                <a href="{{ url_for('autorizar', solicitud_id=s.id, accion='rechazar') }}">Rechazar</a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay solicitudes pendientes.</p>
+    {% endif %}
+
+    <h2>Supervisores pendientes de aprobación</h2>
+    {% if pendientes %}
+        <ul>
+        {% for p in pendientes %}
+            <li>
+                {{ p.nombre }} - <a href="{{ url_for('aprobar_supervisor', user_id=p.id) }}">Aprobar</a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay supervisores pendientes.</p>
+    {% endif %}
+
+    {# <p><a href="{{ url_for('exportar_equipo') }}">Exportar registros del equipo</a></p> #}
+</body>
+</html>

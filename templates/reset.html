@@ -1,0 +1,9 @@
+<h1>Resetear Contraseña</h1>
+<form method="POST">
+  <input name="nombre" placeholder="Usuario"><br>
+  <input name="nueva" type="password" placeholder="Nueva contraseña"><br>
+  <button type="submit">Resetear</button>
+</form>
+{% if mensaje %}
+  <p><strong>{{ mensaje }}</strong></p>
+{% endif %}

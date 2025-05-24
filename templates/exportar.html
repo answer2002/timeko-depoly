@@ -1,0 +1,24 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registros de {{ usuario.nombre }}</title>
+</head>
+<body>
+    <h1>Registros de {{ usuario.nombre }}</h1>
+    <table border="1">
+        <tr>
+            <th>Fecha</th>
+            <th>Hora de Entrada</th>
+            <th>Hora de Salida</th>
+        </tr>
+        {% for r in registros %}
+        <tr>
+            <td>{{ r.fecha }}</td>
+            <td>{{ r.hora_entrada or '-' }}</td>
+            <td>{{ r.hora_salida or '-' }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
