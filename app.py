@@ -21,7 +21,7 @@ def enviar_correo(destino, asunto, cuerpo):
 def get_comunidad_actual():
     return Comunidad.query.first()
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="templates")
 app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = SQLALCHEMY_TRACK_MODIFICATIONS
 app.config['SECRET_KEY'] = SECRET_KEY
