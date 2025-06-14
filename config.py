@@ -1,5 +1,7 @@
 import os
 
+BASEDIR = os.path.abspath(os.path.dirname(__file__))
+
 MAIL_SERVER = 'smtp.strato.com'
 MAIL_PORT = 587
 MAIL_USE_TLS = True
@@ -13,6 +15,6 @@ EMAIL_PASSWORD = os.environ.get("EMAIL_PASSWORD")
 # EMAIL_ADDRESS = "nachogalanmoreno@gmail.com"
 # EMAIL_PASSWORD = "wuer jfan kuzq csv lv"
 
-SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL") or "sqlite:///instance/registros.db"
+SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL") or f"sqlite:///{os.path.join(BASEDIR, 'instance', 'registros.db')}"
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 SECRET_KEY = os.environ.get("SECRET_KEY", "timeko_key")
