@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 import os
 from flask_mail import Mail, Message
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import datetime, date
+from datetime import datetime, date, time
 from sqlalchemy import extract
 from models import db, Usuario, Registro, SolicitudModificacion, Comunidad
 from config import (
@@ -169,7 +169,7 @@ def solicitar_modificacion():
         hora_str = request.form['hora']
         motivo = request.form['motivo']
         fecha_dt = datetime.fromisoformat(fecha_str)
-        hora_dt = datetime.fromisoformat(hora_str)
+        hora_dt = time.fromisoformat(hora_str)
         solicitud = SolicitudModificacion(
             user_id=session['user_id'],
             fecha=fecha_dt,
